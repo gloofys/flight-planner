@@ -1,9 +1,16 @@
 services:
   postgres:
     image: 'postgres:latest'
+    container_name: flightdb_container
+    restart: always
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=flightdb'
+      - 'POSTGRES_PASSWORD=kapsas55'
+      - 'POSTGRES_USER=postgres'
     ports:
-      - '5432'
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
