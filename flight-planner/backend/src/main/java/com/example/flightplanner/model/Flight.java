@@ -30,4 +30,6 @@ public class Flight {
     private int layovers;
 
     private String airline;
+
+    private String flightName;
 }
