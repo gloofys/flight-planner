@@ -28,7 +28,7 @@ const FlightList = () =>{
 
     return (
         <div>
-            <h2>Available Flights</h2>
+            <h2 className="text-4xl mb-22">Available Flights</h2>
             <ul>
                 {flights.map((flight) =>(
                     <li key={flight.id}>
