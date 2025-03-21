@@ -1,7 +1,8 @@
 package com.example.flightplanner.model;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "flights")
@@ -16,12 +17,16 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String departure;
+    @Column(name = "departure_city")
+    private String from;
 
     private String destination;
 
+    @Column(name = "flight_date")
+    private LocalDate flightDate;
+
     @Column(name = "flight_time")
-    private LocalDateTime flightTime;
+    private LocalTime flightTime;
 
     private int duration;
 
