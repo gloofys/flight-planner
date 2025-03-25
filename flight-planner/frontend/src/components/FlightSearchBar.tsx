@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import {Autocomplete, TextField} from "@mui/material";
 
 interface FlightSearchBarProps {
     onSearch: (filters: Record<string, any>) => void;
@@ -9,6 +10,18 @@ const FlightSearchBar = ({onSearch} :FlightSearchBarProps) => {
     const [to, setTo] = useState('')
     const [flightDate, setFlightDate] = useState('')
     const [passengers, setPassengers] = useState(1)
+    const [airportOptionsFrom, setAirportOptionsFrom] = useState<string[]>([]);
+    const [airportOptionsTo, setAirportOptionsTo] = useState<string[]>([]);
+
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/flights/options")
+            .then(res => res.json())
+            .then(data => {
+                setAirportOptionsFrom(data.from);
+                setAirportOptionsTo(data.to);
+            });
+    }, []);
 
     const handleSearch = () => {
        const filters: Record<string, any> = {}
@@ -24,22 +37,24 @@ const FlightSearchBar = ({onSearch} :FlightSearchBarProps) => {
     }
     return (
         <div className="flex items-center space-x-2 bg-white p-3 rounded-full shadow-md border border-gray-200 w-full max-w-3xl mx-auto">
-            <input
-                type="text"
-                placeholder="From"
+            <Autocomplete
+                options={airportOptionsFrom}
                 value={from}
-                onChange={(e) => setFrom(e.target.value)}
-                className="px-3 py-2 border rounded-md w-1/4"
+                onChange={(e, newValue) => setFrom(newValue || '')}
+                renderInput={(params) => <TextField {...params} label="From" variant="outlined" />}
+                className="w-1/4"
+                freeSolo
             />
 
             <span className="text-xl">↔️</span>
 
-            <input
-                type="text"
-                placeholder="To?"
+            <Autocomplete
+                options={airportOptionsTo}
                 value={to}
-                onChange={(e) => setTo(e.target.value)}
-                className="px-3 py-2 border rounded-md w-1/4"
+                onChange={(e, newValue) => setTo(newValue || '')}
+                renderInput={(params) => <TextField {...params} label="To" variant="outlined" />}
+                className="w-1/4"
+                freeSolo
             />
 
             <input
@@ -62,6 +77,7 @@ const FlightSearchBar = ({onSearch} :FlightSearchBarProps) => {
 
             <button onClick={handleSearch} className="bg-red-500 text-white px-4 py-2 rounded-md">🔍</button>
         </div>
-    )
-}
-export default FlightSearchBar
+    );
+};
+
+export default FlightSearchBar;

@@ -27,6 +27,12 @@ const FlightList = () =>{
             .finally(() => setLoading(false));
     }, [filters]);
 
+    useEffect(() => {
+        getFlights()
+            .then(data => setFlights(data))
+            .catch(err => console.error("Failed to fetch initial flights", err));
+    }, []);
+
     if(loading) return <p>Loading Flights...</p>;
 
     return (
