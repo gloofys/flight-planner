@@ -9,3 +9,11 @@ export async function getFlights(filters: Record<string, any> = {}) {
     }
     return response.json();
 }
+
+export async function getFlightsMetadata() {
+    const response = await fetch(`${API_URL}/metadata`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch filter metadata");
+    }
+    return response.json();
+}

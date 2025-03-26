@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react'
 import {Autocomplete, TextField} from "@mui/material";
+import { useFlightFilters} from "../context/FlightFiltersContext.tsx";
 
-interface FlightSearchBarProps {
-    onSearch: (filters: Record<string, any>) => void;
-}
 
-const FlightSearchBar = ({onSearch} :FlightSearchBarProps) => {
+
+const FlightSearchBar = () => {
+    const { setSearchFilters } = useFlightFilters();
     const [from, setFrom] = useState('')
     const [to, setTo] = useState('')
     const [flightDate, setFlightDate] = useState('')
@@ -24,12 +24,12 @@ const FlightSearchBar = ({onSearch} :FlightSearchBarProps) => {
     }, []);
 
     const handleSearch = () => {
-       const filters: Record<string, any> = {}
-        if(from) filters.from = from
+        const filters: Record<string, any> = {};
+        if (from) filters.from = from;
         if (to) filters.destination = to;
-        if(flightDate) filters.flightDate = flightDate;
+        if (flightDate) filters.flightDate = flightDate;
 
-        onSearch(filters)
+        setSearchFilters(filters);
 
         console.log("Searching flights from:", from, "to:", to);
         console.log("date:", flightDate);

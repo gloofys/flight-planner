@@ -6,6 +6,7 @@ import com.example.flightplanner.service.FlightService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.flightplanner.dto.FilterMetaDataDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,11 +31,12 @@ public class FlightController {
     public ResponseEntity<List<Flight>> getFilteredFlights(
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String destination,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate flightDate) {
-
-
-        List<Flight> flights = flightService.getFilteredFlights(from, destination, flightDate);
-        return ResponseEntity.ok(flights);
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate flightDate
+    ) {
+        if (from == null && destination == null && flightDate == null) {
+            return ResponseEntity.ok(flightService.getAllFlights());
+        }
+        return ResponseEntity.ok(flightService.getFilteredFlights(from, destination, flightDate));
     }
 
     @GetMapping("/{id}")
@@ -50,5 +52,11 @@ public class FlightController {
         options.put("from", flightRepository.findDistinctAirports());
         options.put("to", flightRepository.findDistinctDestinations());
         return options;
+    }
+    @GetMapping("/metadata")
+    public ResponseEntity<FilterMetaDataDTO> getFlightMetadata() {
+        List<Flight> allFlights = flightService.getAllFlights(); // or filtered ones
+        FilterMetaDataDTO meta = flightService.getFilterMetadata(allFlights);
+        return ResponseEntity.ok(meta);
     }
 }
