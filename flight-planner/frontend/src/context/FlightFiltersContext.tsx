@@ -22,7 +22,7 @@ interface FlightFilters {
 interface FlightFiltersContextType {
     filters: FlightFilters;
     setSearchFilters: (search: Partial<SearchFilters>) => void;
-    setUiFilters: (ui: Partial<UiFilters>) => void;
+    setUiFilters: (ui: Partial<UiFilters> | ((prev: UiFilters) => UiFilters)) => void;
     resetFilters: () => void;
 }
 
@@ -45,8 +45,11 @@ export const FlightFiltersProvider = ({ children }: { children: ReactNode }) => 
         setFilters((prev) => ({ ...prev, search: { ...prev.search, ...search } }));
     };
 
-    const setUiFilters = (ui: Partial<UiFilters>) => {
-        setFilters((prev) => ({ ...prev, ui: { ...prev.ui, ...ui } }));
+    const setUiFilters = (ui: Partial<UiFilters> | ((prev: UiFilters) => UiFilters)) => {
+        setFilters((prev) => ({
+            ...prev,
+            ui: typeof ui === "function" ? ui(prev.ui) : { ...prev.ui, ...ui },
+        }));
     };
 
     const resetFilters = () => setFilters(defaultFilters);

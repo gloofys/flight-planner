@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { getFlightsMetadata, getFlights } from "../services/flightService.ts";
+import {useEffect, useState} from "react";
+import {getFlightsMetadata, getFlights} from "../services/flightService.ts";
 import FlightSearchBar from "./FlightSearchBar.tsx";
-import { useFlightFilters } from "../context/FlightFiltersContext.tsx";
+import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
 // import MobileFlightFilters from "./flightFilters/MobileFlightFilters.tsx";
 import DesktopFlightFilters from "./flightFilters/DesktopFlightFilters.tsx";
 import {Link} from "react-router-dom";
@@ -20,26 +20,37 @@ interface Flight {
 }
 
 const FlightList = () => {
-    const { filters, setUiFilters } = useFlightFilters();
+    const {filters, setUiFilters} = useFlightFilters();
     const [baseFlights, setBaseFlights] = useState<Flight[]>([]);
     const [filteredFlights, setFilteredFlights] = useState<Flight[]>([]);
     const [loading, setLoading] = useState(true);
     const [priceMin, setPriceMin] = useState(0);
     const [priceMax, setPriceMax] = useState(1000);
+    const [durationMax, setDurationMax] = useState(600);
+    const [layoversMax, setLayoversMax] = useState(2);
 
     useEffect(() => {
-        getFlightsMetadata()
+        getFlightsMetadata(filters.search)
             .then((meta) => {
-                setPriceMin(meta.minPrice);
-                setPriceMax(meta.maxPrice);
-                setUiFilters({
-                    priceRange: [meta.minPrice, meta.maxPrice],
-                    flightDuration: meta.maxDuration ?? 600,
-                    layovers: meta.maxLayovers ?? 2,
-                    flightTime: "Any",
-                });
+                let adjustedMin = meta.minPrice;
+                let adjustedMax = meta.maxPrice;
+                if (meta.minPrice === meta.maxPrice) {
+                    adjustedMax = meta.maxPrice + 1;
+                }
+                setPriceMin(adjustedMin);
+                setPriceMax(adjustedMax);
+                setUiFilters((prev) => ({
+                    ...prev,
+                    priceRange: [adjustedMin, adjustedMax],
+                    flightDuration: meta.maxDuration || prev.flightDuration,
+                    layovers: 2, // Reset to 2 for every new search
+                }));
+                if (meta.maxDuration) setDurationMax(meta.maxDuration);
+                if (meta.maxLayovers) setLayoversMax(meta.maxLayovers);
             })
-    }, []);
+            .catch(console.error);
+    }, [filters.search]);
+
 
     // Fetch base flights (search results)
     useEffect(() => {
@@ -57,7 +68,7 @@ const FlightList = () => {
     }, [filters.search]);
 
     useEffect(() => {
-        const { priceRange, flightDuration, layovers, flightTime } = filters.ui;
+        const {priceRange, flightDuration, layovers, flightTime} = filters.ui;
 
         const result = baseFlights.filter((flight) => {
             const time = flight.flightTime.slice(0, 5);
@@ -83,14 +94,15 @@ const FlightList = () => {
         <div className="flex flex-col min-h-screen">
             {/* Header */}
             <header className="w-full bg-white shadow-md p-4 sticky top-0 z-50">
-                <FlightSearchBar />
+                <FlightSearchBar/>
             </header>
 
             {/* Main content layout */}
             <div className="flex flex-1">
                 {/* Sidebar */}
                 <aside className="hidden md:block w-64 bg-gray-50 border-r p-4">
-                    <DesktopFlightFilters priceMin={priceMin} priceMax={priceMax} />
+                    <DesktopFlightFilters priceMin={priceMin} priceMax={priceMax} durationMax={durationMax}
+                                          layoversMax={layoversMax}/>
                 </aside>
 
                 {/* Flights list */}
@@ -100,9 +112,15 @@ const FlightList = () => {
                     ) : filteredFlights.length > 0 ? (
                         <ul className="mt-4">
                             {filteredFlights.map((flight) => (
-                                <li key={flight.id} className="border p-2 mb-2 rounded hover:bg-gray-100">
-                                    <Link to={`/flights/${flight.id}`} className="block">
-                                        ✈️ {flight.from} → {flight.destination} ({flight.flightDate}) – ${flight.price}
+                                <li key={flight.id}
+                                    className="border p-4 mb-3 rounded shadow-sm hover:bg-gray-50 transition">
+                                    <Link to={`/flights/${flight.id}`} className="block text-sm">
+                                        <div className="font-semibold text-lg">
+                                            ✈ {flight.from} → {flight.destination}
+                                        </div>
+                                        <div
+                                            className="text-gray-600">{flight.flightDate} at {flight.flightTime.slice(0, 5)}</div>
+                                        <div className="text-gray-700 font-medium mt-1">€{flight.price.toFixed(2)}</div>
                                     </Link>
                                 </li>
                             ))}

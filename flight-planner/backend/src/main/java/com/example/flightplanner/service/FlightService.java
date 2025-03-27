@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
-import java.util.stream.Stream;
 
 @Service
 public class FlightService {
@@ -48,36 +47,32 @@ public class FlightService {
         return flightRepository.findById(id);
     }
 
-    public FilterMetaDataDTO getFilterMetadata(List<Flight> flights) {
-        IntSummaryStatistics priceStats = flights.stream()
+    public FilterMetaDataDTO getFilterMetadata(String from, String destination, LocalDate flightDate) {
+        List<Flight> filteredFlights = getFilteredFlights(from, destination, flightDate);
+
+        System.out.println("Received filters - From: " + from + ", Destination: " + destination + ", FlightDate: " + flightDate);
+        System.out.println("Filtered flights count: " + filteredFlights.size());
+
+        if (filteredFlights.isEmpty()) {
+            return new FilterMetaDataDTO(0, 0, 0, 0); // fallback
+        }
+
+        IntSummaryStatistics priceStats = filteredFlights.stream()
                 .mapToInt(f -> (int) f.getPrice())
                 .summaryStatistics();
-
-        IntSummaryStatistics durationStats = flights.stream()
+        IntSummaryStatistics durationStats = filteredFlights.stream()
                 .mapToInt(Flight::getDuration)
                 .summaryStatistics();
-
-        IntSummaryStatistics layoverStats = flights.stream()
+        int maxLayovers = filteredFlights.stream()
                 .mapToInt(Flight::getLayovers)
-                .summaryStatistics();
-
-        List<String> timeBuckets = Stream.of("Morning", "Afternoon", "Evening")
-                .filter(bucket -> flights.stream().anyMatch(f -> {
-                    int hour = f.getFlightTime().getHour();
-                    return (bucket.equals("Morning") && hour < 12) ||
-                            (bucket.equals("Afternoon") && hour >= 12 && hour < 17) ||
-                            (bucket.equals("Evening") && hour >= 17);
-                }))
-                .toList();
+                .max()
+                .orElse(0);
 
         return new FilterMetaDataDTO(
                 priceStats.getMin(),
                 priceStats.getMax(),
-                durationStats.getMin(),
                 durationStats.getMax(),
-                layoverStats.getMin(),
-                layoverStats.getMax(),
-                timeBuckets
+                maxLayovers
         );
     }
 }

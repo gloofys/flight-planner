@@ -1,17 +1,25 @@
 // components/FlightFilters/filters/PriceFilter.tsx
-import { Slider } from "@base-ui-components/react/slider";
+import { Slider } from '@base-ui-components/react/slider';
 import { useFlightFilters } from "../../../context/FlightFiltersContext.tsx";
+import {useEffect} from "react";
 
 const PriceFilter = ({ min, max }: { min: number; max: number }) => {
     const { filters, setUiFilters } = useFlightFilters();
     const value = filters.ui.priceRange;
+
+    useEffect(() => {
+
+        if (value[0] !== min || value[1] !== max) {
+            setUiFilters({priceRange: [min, max]});
+        }
+    }, [min, max]);
 
     return (
         <div className="mb-4">
             <p className="text-sm mb-2 text-gray-600">{value[0]}€ – {value[1]}€</p>
             <Slider.Root
                 value={value}
-                onValueChange={(v) => setUiFilters({ priceRange: v as [number, number] })}
+                onValueChange={(v) => setUiFilters({priceRange: v as [number, number]})}
                 min={min}
                 max={max}
                 step={10}

@@ -54,9 +54,12 @@ public class FlightController {
         return options;
     }
     @GetMapping("/metadata")
-    public ResponseEntity<FilterMetaDataDTO> getFlightMetadata() {
-        List<Flight> allFlights = flightService.getAllFlights(); // or filtered ones
-        FilterMetaDataDTO meta = flightService.getFilterMetadata(allFlights);
+    public ResponseEntity<FilterMetaDataDTO> getFlightMetadata(
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String destination,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate flightDate) {
+
+        FilterMetaDataDTO meta = flightService.getFilterMetadata(from, destination, flightDate);
         return ResponseEntity.ok(meta);
     }
 }

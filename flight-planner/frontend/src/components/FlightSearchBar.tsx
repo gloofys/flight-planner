@@ -29,7 +29,11 @@ const FlightSearchBar = () => {
         if (to) filters.destination = to;
         if (flightDate) filters.flightDate = flightDate;
 
-        setSearchFilters(filters);
+        setSearchFilters({
+            from,
+            destination: to,
+            flightDate,
+        });
 
         console.log("Searching flights from:", from, "to:", to);
         console.log("date:", flightDate);
@@ -46,7 +50,7 @@ const FlightSearchBar = () => {
                 freeSolo
             />
 
-            <span className="text-xl">↔️</span>
+            <span className="text-xl"></span>
 
             <Autocomplete
                 options={airportOptionsTo}
