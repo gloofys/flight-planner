@@ -20,6 +20,20 @@ const FlightDetails = () => {
     const [flight, setFlight] = useState<Flight | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const handleChooseSeats = async () => {
+        try {
+            const res = await fetch("http://localhost:8080/api/seats/reset", {
+                method: "POST",
+            });
+            if (!res.ok) {
+                throw new Error("Failed to reset seat plan");
+            }
+            navigate(`/flights/${id}/seats`);
+        } catch (error) {
+            console.error("Error resetting seat plan:", error);
+        }
+    };
+
     useEffect(() => {
         fetch(`http://localhost:8080/api/flights/${id}`)
             .then(res => res.json())
@@ -46,7 +60,7 @@ const FlightDetails = () => {
 
             <div className="mt-6 flex gap-4">
                 <button
-                    onClick={() => alert("Seat selection coming soon!")}
+                    onClick={handleChooseSeats}
                     className="px-4 py-2 bg-blue-600 text-white rounded"
                 >
                     Choose Seats
