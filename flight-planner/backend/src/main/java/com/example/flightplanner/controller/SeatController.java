@@ -2,13 +2,14 @@ package com.example.flightplanner.controller;
 
 import com.example.flightplanner.model.Seat;
 import com.example.flightplanner.service.SeatService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/seats")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5175")
 public class SeatController {
 
     private final SeatService seatService;
@@ -29,6 +30,11 @@ public class SeatController {
             @RequestParam(required = false, defaultValue = "false") boolean nearExit
     ){
         return seatService.getFilteredSeats(window, extraLegroom, nearExit);
+    }
+    @PostMapping("/reset")
+    public ResponseEntity<Void> resetSeatPlan() {
+        seatService.resetSeatPlan();
+        return ResponseEntity.ok().build();
     }
 
 }
