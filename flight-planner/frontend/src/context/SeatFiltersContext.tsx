@@ -5,6 +5,7 @@ export interface SeatFilters {
     window: boolean;
     extraLegroom: boolean;
     nearExit: boolean;
+    adjacentCount: number | null;
 }
 
 export interface SeatFiltersContextType {
@@ -16,6 +17,7 @@ const defaultFilters: SeatFilters = {
     window: false,
     extraLegroom: false,
     nearExit: false,
+    adjacentCount: null,
 };
 
 const SeatFiltersContext = createContext<SeatFiltersContextType | undefined>(undefined);
