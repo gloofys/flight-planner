@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {getFlightsMetadata, getFlights} from "../services/flightService.ts";
-import FlightSearchBar from "./FlightSearchBar.tsx";
+import FlightSearchBar from "../components/FlightSearchBar.tsx";
 import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
 // import MobileFlightFilters from "./flightFilters/MobileFlightFilters.tsx";
-import DesktopFlightFilters from "./flightFilters/DesktopFlightFilters.tsx";
+import DesktopFlightFilters from "../components/flightFilters/DesktopFlightFilters.tsx";
 import {Link} from "react-router-dom";
 
 interface Flight {

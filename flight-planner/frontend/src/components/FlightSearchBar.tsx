@@ -33,6 +33,7 @@ const FlightSearchBar = () => {
             from,
             destination: to,
             flightDate,
+            passengers,
         });
 
         console.log("Searching flights from:", from, "to:", to);

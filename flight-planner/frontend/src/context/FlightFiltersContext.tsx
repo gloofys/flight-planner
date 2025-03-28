@@ -5,6 +5,7 @@ interface SearchFilters {
     from?: string;
     destination?: string;
     flightDate?: string;
+    passengers:number;
 }
 
 interface UiFilters {

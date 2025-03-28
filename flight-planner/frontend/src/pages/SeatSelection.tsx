@@ -1,10 +1,11 @@
-
+// pages/SeatSelection.tsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SeatRow from "../components/seats/SeatRow.tsx";
-import DesktopSeatFilters from "../components/seatFilters/DesktopSeatFilters.tsx";
-import MobileSeatFilters from "../components/seatFilters/MobileSeatFilters.tsx";
+import SeatRow from "../components/seats/SeatRow";
+import DesktopSeatFilters from "../components/seatFilters/DesktopSeatFilters";
+import MobileSeatFilters from "../components/seatFilters/MobileSeatFilters";
 import { SeatFiltersProvider } from "../context/SeatFiltersContext";
+import { useFlightFilters } from "../context/FlightFiltersContext";
 
 interface Seat {
     id: number;
@@ -21,8 +22,9 @@ interface Seat {
 
 const SeatSelectionContent = () => {
     const [seats, setSeats] = useState<Seat[]>([]);
-    const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const navigate = useNavigate();
+    const { filters } = useFlightFilters(); // read search filters (including passengers)
 
     useEffect(() => {
         fetch("http://localhost:8080/api/seats")
@@ -31,6 +33,7 @@ const SeatSelectionContent = () => {
             .catch((err) => console.error("Failed to fetch seats", err));
     }, []);
 
+    // Group seats by rowIndex.
     const seatsByRow = seats.reduce((acc: Record<number, Seat[]>, seat) => {
         acc[seat.rowIndex] = acc[seat.rowIndex] || [];
         acc[seat.rowIndex].push(seat);
@@ -41,24 +44,50 @@ const SeatSelectionContent = () => {
         .map(Number)
         .sort((a, b) => a - b);
 
+    // Handler to toggle selection of a seat.
+    const handleSelect = (seat: Seat) => {
+        setSelectedSeats((prev) => {
+            // If already selected, remove it.
+            if (prev.find((s) => s.id === seat.id)) {
+                return prev.filter((s) => s.id !== seat.id);
+            } else {
+                // Otherwise, add it.
+                return [...prev, seat];
+            }
+        });
+    };
+
     return (
         <div className="max-w-3xl mx-auto p-6">
             <h2 className="text-2xl font-bold mb-6">Select Your Seat</h2>
+            <p className="mb-4 text-sm text-gray-600">
+                Please select exactly {filters.search.passengers || 1} seat
+                {(filters.search.passengers || 1) > 1 ? "s" : ""}.
+            </p>
             <div className="space-y-3">
                 {sortedRows.map((row) => (
                     <SeatRow
                         key={row}
                         row={row}
                         seats={seatsByRow[row]}
-                        selectedSeatId={selectedSeatId}
-                        onSelect={(id) => setSelectedSeatId(id)}
+                        // Adjust SeatRow to accept an array of selected seat IDs
+                        selectedSeatIds={selectedSeats.map((s) => s.id)}
+                        onSelect={(seat) => handleSelect(seat)}
                     />
                 ))}
             </div>
             <div className="mt-6">
                 <button
-                    disabled={!selectedSeatId}
-                    onClick={() => alert(`Selected seat ID: ${selectedSeatId}`)}
+                    disabled={
+                        selectedSeats.length !== (filters.search.passengers || 1)
+                    }
+                    onClick={() =>
+                        alert(
+                            `Selected seats: ${selectedSeats
+                                .map((s) => s.seatNumber)
+                                .join(", ")}`
+                        )
+                    }
                     className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
                 >
                     Confirm Seat
@@ -77,9 +106,10 @@ const SeatSelectionContent = () => {
 const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
+            {/* Mobile filters on top */}
             <MobileSeatFilters />
             <div className="flex">
-
+                {/* Desktop filters on sidebar */}
                 <DesktopSeatFilters />
                 <SeatSelectionContent />
             </div>

@@ -1,4 +1,4 @@
-
+// components/seats/SeatRow.tsx
 import SeatBox from "./SeatBox";
 import { useSeatFilters} from "../../context/SeatFiltersContext.tsx";
 
@@ -18,11 +18,11 @@ interface Seat {
 interface SeatRowProps {
     row: number;
     seats: Seat[];
-    selectedSeatId: number | null;
-    onSelect: (id: number) => void;
+    selectedSeatIds: number[];
+    onSelect: (seat: Seat) => void;
 }
 
-const SeatRow = ({ row, seats, selectedSeatId, onSelect }: SeatRowProps) => {
+const SeatRow = ({ row, seats, selectedSeatIds, onSelect }: SeatRowProps) => {
     const { filters } = useSeatFilters();
 
     const matchesFilter = (seat: Seat) => {
@@ -51,9 +51,9 @@ const SeatRow = ({ row, seats, selectedSeatId, onSelect }: SeatRowProps) => {
                     <SeatBox
                         key={seat.id}
                         seat={seat}
-                        isSelected={selectedSeatId === seat.id}
+                        isSelected={selectedSeatIds.includes(seat.id)}
                         matchesFilter={matchesFilter(seat)}
-                        onSelect={() => onSelect(seat.id)}
+                        onSelect={() => onSelect(seat)}
                     />
                 ))}
                 <div className="text-center font-semibold text-gray-500">{row}</div>
@@ -61,9 +61,9 @@ const SeatRow = ({ row, seats, selectedSeatId, onSelect }: SeatRowProps) => {
                     <SeatBox
                         key={seat.id}
                         seat={seat}
-                        isSelected={selectedSeatId === seat.id}
+                        isSelected={selectedSeatIds.includes(seat.id)}
                         matchesFilter={matchesFilter(seat)}
-                        onSelect={() => onSelect(seat.id)}
+                        onSelect={() => onSelect(seat)}
                     />
                 ))}
             </div>

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import FlightList from "./components/FlightList.tsx";
+import FlightList from "./pages/FlightList.tsx";
 import FlightDetails from "./pages/FlightDetails.tsx";
 import { FlightFiltersProvider } from "./context/FlightFiltersContext.tsx";
 import SeatSelection from "./pages/SeatSelection.tsx";
