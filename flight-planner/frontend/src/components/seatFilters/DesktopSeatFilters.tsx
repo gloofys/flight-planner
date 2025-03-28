@@ -32,7 +32,7 @@ const DesktopSeatFilters = () => {
                 <label className="block font-semibold text-gray-700 mb-1">
                     Adjacent Seats:
                 </label>
-                <div className="flex space-x-2">
+                <div className="flex space-x-0">
                     <button
                         onClick={() => setFilters({adjacentCount: 2})}
                         className={`px-3 py-1 border rounded transition-colors ${
