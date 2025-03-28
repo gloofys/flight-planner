@@ -1,44 +1,69 @@
-
-import { useSeatFilters} from "../../context/SeatFiltersContext.tsx";
+import {useSeatFilters} from "../../context/SeatFiltersContext.tsx";
+import FilterCheckbox from "./filterComponents/FilterCheckbox.tsx";
 
 const DesktopSeatFilters = () => {
-    const { filters, setFilters } = useSeatFilters();
+    const {filters, setFilters} = useSeatFilters();
 
     return (
         <div className="hidden md:block p-4 bg-gray-50 border-r">
-            <h3 className="text-lg font-semibold mb-3">Filters</h3>
+            <h3 className="text-lg font-semibold mb-3">Filter</h3>
             <div className="mb-2">
-                <label className="flex items-center">
-                    <input
-                        type="checkbox"
-                        checked={filters.window || false}
-                        onChange={(e) => setFilters({ window: e.target.checked })}
-                        className="mr-2"
-                    />
-                    Window Seat
-                </label>
+                <FilterCheckbox
+                    label="Window Seat"
+                    checked={filters.window || false}
+                    onChange={(value) => setFilters({window: value})}
+                />
             </div>
             <div className="mb-2">
-                <label className="flex items-center">
-                    <input
-                        type="checkbox"
-                        checked={filters.extraLegroom || false}
-                        onChange={(e) => setFilters({ extraLegroom: e.target.checked })}
-                        className="mr-2"
-                    />
-                    Extra Legroom
-                </label>
+                <FilterCheckbox
+                    label="Extra Legroom"
+                    checked={filters.extraLegroom || false}
+                    onChange={(value) => setFilters({extraLegroom: value})}
+                />
             </div>
             <div className="mb-2">
-                <label className="flex items-center">
-                    <input
-                        type="checkbox"
-                        checked={filters.nearExit || false}
-                        onChange={(e) => setFilters({ nearExit: e.target.checked })}
-                        className="mr-2"
-                    />
-                    Near Exit
+                <FilterCheckbox
+                    label="Near Exit"
+                    checked={filters.nearExit || false}
+                    onChange={(value) => setFilters({ nearExit: value })}
+                />
+            </div>
+            <div className="mb-2">
+                <label className="block font-semibold text-gray-700 mb-1">
+                    Adjacent Seats:
                 </label>
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => setFilters({adjacentCount: 2})}
+                        className={`px-3 py-1 border rounded transition-colors ${
+                            filters.adjacentCount === 2
+                                ? "bg-blue-500 text-white border-blue-500"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                        }`}
+                    >
+                        2 Adjacent
+                    </button>
+                    <button
+                        onClick={() => setFilters({adjacentCount: 3})}
+                        className={`px-3 py-1 border rounded transition-colors ${
+                            filters.adjacentCount === 3
+                                ? "bg-blue-500 text-white border-blue-500"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                        }`}
+                    >
+                        3 Adjacent
+                    </button>
+                    <button
+                        onClick={() => setFilters({adjacentCount: null})}
+                        className={`px-3 py-1 border rounded transition-colors ${
+                            filters.adjacentCount === null
+                                ? "bg-blue-500 text-white border-blue-500"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                        }`}
+                    >
+                        Off
+                    </button>
+                </div>
             </div>
         </div>
     );

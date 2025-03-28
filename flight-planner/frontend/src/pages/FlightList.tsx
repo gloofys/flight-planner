@@ -52,7 +52,7 @@ const FlightList = () => {
     }, [filters.search]);
 
 
-    // Fetch base flights (search results)
+
     useEffect(() => {
         setLoading(true);
         getFlights(filters.search)
@@ -92,20 +92,15 @@ const FlightList = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            {/* Header */}
             <header className="w-full bg-white shadow-md p-4 sticky top-0 z-50">
                 <FlightSearchBar/>
             </header>
-
-            {/* Main content layout */}
             <div className="flex flex-1">
-                {/* Sidebar */}
+
                 <aside className="hidden md:block w-64 bg-gray-50 border-r p-4">
                     <DesktopFlightFilters priceMin={priceMin} priceMax={priceMax} durationMax={durationMax}
                                           layoversMax={layoversMax}/>
                 </aside>
-
-                {/* Flights list */}
                 <main className="flex-1 p-6">
                     {loading ? (
                         <p>Loading Flights...</p>

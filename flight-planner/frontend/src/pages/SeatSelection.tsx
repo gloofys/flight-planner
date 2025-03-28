@@ -1,4 +1,4 @@
-// pages/SeatSelection.tsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SeatRow from "../components/seats/SeatRow";
@@ -24,7 +24,7 @@ const SeatSelectionContent = () => {
     const [seats, setSeats] = useState<Seat[]>([]);
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const navigate = useNavigate();
-    const { filters } = useFlightFilters(); // read search filters (including passengers)
+    const { filters } = useFlightFilters();
 
     useEffect(() => {
         fetch("http://localhost:8080/api/seats")
@@ -33,7 +33,6 @@ const SeatSelectionContent = () => {
             .catch((err) => console.error("Failed to fetch seats", err));
     }, []);
 
-    // Group seats by rowIndex.
     const seatsByRow = seats.reduce((acc: Record<number, Seat[]>, seat) => {
         acc[seat.rowIndex] = acc[seat.rowIndex] || [];
         acc[seat.rowIndex].push(seat);
@@ -44,14 +43,11 @@ const SeatSelectionContent = () => {
         .map(Number)
         .sort((a, b) => a - b);
 
-    // Handler to toggle selection of a seat.
     const handleSelect = (seat: Seat) => {
         setSelectedSeats((prev) => {
-            // If already selected, remove it.
             if (prev.find((s) => s.id === seat.id)) {
                 return prev.filter((s) => s.id !== seat.id);
             } else {
-                // Otherwise, add it.
                 return [...prev, seat];
             }
         });
@@ -70,7 +66,6 @@ const SeatSelectionContent = () => {
                         key={row}
                         row={row}
                         seats={seatsByRow[row]}
-                        // Adjust SeatRow to accept an array of selected seat IDs
                         selectedSeatIds={selectedSeats.map((s) => s.id)}
                         onSelect={(seat) => handleSelect(seat)}
                     />
@@ -106,10 +101,8 @@ const SeatSelectionContent = () => {
 const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
-            {/* Mobile filters on top */}
             <MobileSeatFilters />
             <div className="flex">
-                {/* Desktop filters on sidebar */}
                 <DesktopSeatFilters />
                 <SeatSelectionContent />
             </div>
