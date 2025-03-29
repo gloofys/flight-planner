@@ -93,14 +93,14 @@ const FlightList = () => {
 
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <header className="w-full bg-white shadow-md p-4 sticky top-0 z-50">
+        <div className="flex flex-col min-h-screen bg-ebb">
+            <header className="w-full bg-ebb shadow-md p-4 sticky top-0 z-50">
                 <FlightSearchBar/>
             </header>
             <MobileFlightFilters/>
             <div className="flex flex-1">
 
-                <aside className="hidden md:block w-64 bg-gray-50 border-r p-4">
+                <aside className="hidden md:block w-64 bg-ebb border-r p-4">
                     <DesktopFlightFilters priceMin={priceMin} priceMax={priceMax} durationMax={durationMax}
                                           layoversMax={layoversMax}/>
                 </aside>
@@ -117,7 +117,7 @@ const FlightList = () => {
                             <ul className="mt-4">
                                 {flightsToDisplay.map((flight) => (
                                     <li key={flight.id}
-                                        className="border p-4 mb-3 rounded shadow-sm hover:bg-gray-50 transition">
+                                        className="border p-4 mb-3 rounded shadow-sm bg-white hover:bg-gray-50 transition">
                                         <Link to={`/flights/${flight.id}`} className="block text-sm">
                                             <div className="font-semibold text-lg">
                                                 <FlightIcon/> {flight.from} → {flight.destination}

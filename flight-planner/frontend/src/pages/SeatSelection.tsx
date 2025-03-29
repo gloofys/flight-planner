@@ -77,8 +77,8 @@ const SeatSelectionContent = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-6">Select Your Seat</h2>
+        <div className="max-w-3xl mx-auto bg-white rounded  p-0 md:p-6 mt-0 md:mt-6 mb-10">
+            <h2 className="text-2xl font-bold mb-6">Select Your Seat(s)</h2>
             <p className="mb-4 text-sm text-gray-600">
                 Please select exactly {filters.search.passengers || 1} seat
                 {(filters.search.passengers || 1) > 1 ? "s" : ""}.
@@ -124,7 +124,7 @@ const SeatSelectionContent = () => {
                     onClose={() => setSnackbarOpen(false)}
                     severity="warning"
                     variant="filled"
-                    sx={{ width: "100%" }}
+                    sx={{width: "100%"}}
                 >
                     {snackbarMsg}
                 </Alert>
@@ -137,7 +137,7 @@ const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
             <MobileSeatFilters/>
-            <div className="flex">
+            <div className="flex bg-white md:bg-ebb">
                 <DesktopSeatFilters/>
                 <SeatSelectionContent/>
             </div>

@@ -14,7 +14,7 @@ const DurationFilter = ({ max }: { max: number }) => {
 
     return (
         <div className="mb-4">
-            <p className="text-sm mb-2 text-gray-600">Max Duration: {value} min</p>
+            <p className="text-m mb-2 text-gray-600">Max Duration: {value} min</p>
             <Slider.Root
                 value={[value]}
                 onValueChange={(v) => {
@@ -27,8 +27,8 @@ const DurationFilter = ({ max }: { max: number }) => {
                 step={10}
             >
                 <Slider.Control className="flex items-center py-3">
-                    <Slider.Track className="h-1 w-full bg-gray-200 relative">
-                        <Slider.Indicator className="absolute h-full bg-blue-500 rounded" />
+                    <Slider.Track className="h-1 w-full bg-gray-500 relative">
+                        <Slider.Indicator className="absolute h-full bg-royal-blue rounded" />
                         <Slider.Thumb className="size-4 bg-white border shadow-md rounded-full" />
                     </Slider.Track>
                 </Slider.Control>

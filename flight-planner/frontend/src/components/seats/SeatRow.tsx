@@ -27,7 +27,7 @@ const SeatRow = ({ row, seats, selectedSeatIds, onSelect }: SeatRowProps) => {
 
     const computeValidSeatIds = (seatArray: Seat[]): Set<number> => {
         const validSeatIds = new Set<number>();
-        const groupSize = filters.adjacentCount || 1; // if adjacentCount is not set, groupSize defaults to 1.
+        const groupSize = filters.adjacentCount || 1;
         let currentGroup: Seat[] = [];
 
         for (const seat of seatArray) {
@@ -85,11 +85,12 @@ const SeatRow = ({ row, seats, selectedSeatIds, onSelect }: SeatRowProps) => {
     return (
         <div>
             {row === 14 && (
-                <div className="my-2 py-2 bg-yellow-100 text-center font-semibold">
-                    EXIT ROW AREA
+                <div className="my-2 py-2 bg-yellow-100 text-center font-semibold flex justify-between px-4 text-sm text-yellow-900">
+                    <span>EXIT</span>
+                    <span>EXIT</span>
                 </div>
             )}
-            <div className="grid grid-cols-6 gap-x-0 items-center justify-items-center">
+            <div className="grid grid-cols-6 gap-x-1 items-center justify-items-center">
                 {leftSeats.map((seat) => (
                     <SeatBox
                         key={seat.id}

@@ -20,7 +20,7 @@ interface SeatBoxProps {
 const SeatBox = ({ seat, isSelected, matchesFilter, onSelect }: SeatBoxProps) => {
     return (
         <div
-            className={`w-20 h-14 text-xs text-center rounded cursor-pointer flex items-center justify-center transition-all 
+            className={`w-14 h-14 text-xs text-center rounded cursor-pointer flex items-center justify-center transition-all 
         ${seat.occupied
                 ? "bg-gray-300 text-white cursor-not-allowed"
                 : isSelected

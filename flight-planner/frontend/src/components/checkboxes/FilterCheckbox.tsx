@@ -10,7 +10,7 @@ const FilterCheckbox = ({ label, checked, onChange }: FilterCheckboxProps) => (
             type="checkbox"
             checked={checked}
             onChange={(e) => onChange(e.target.checked)}
-            className="mr-2 appearance-none w-4 h-4 border border-gray-400 rounded checked:bg-blue-600 checked:border-transparent focus:outline-none"
+            className="mr-2 appearance-none w-4 h-4 border border-gray-400 rounded checked:bg-royal-blue checked:border-transparent focus:outline-none"
         />
         {label}
     </label>

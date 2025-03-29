@@ -1,11 +1,11 @@
 import {useSeatFilters} from "../../context/SeatFiltersContext.tsx";
-import FilterCheckbox from "./filterComponents/FilterCheckbox.tsx";
+import FilterCheckbox from "../checkboxes/FilterCheckbox.tsx";
 
 const DesktopSeatFilters = () => {
     const {filters, setFilters} = useSeatFilters();
 
     return (
-        <div className="hidden md:block p-4 bg-gray-50 border-r">
+        <div className="hidden md:block p-4 bg-ebb border-r">
             <h3 className="text-lg font-semibold mb-3">Filter</h3>
             <div className="mb-2">
                 <FilterCheckbox
@@ -37,7 +37,7 @@ const DesktopSeatFilters = () => {
                         onClick={() => setFilters({adjacentCount: 2})}
                         className={`px-3 py-1 border rounded transition-colors ${
                             filters.adjacentCount === 2
-                                ? "bg-blue-500 text-white border-blue-500"
+                                ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
                         }`}
                     >
@@ -47,7 +47,7 @@ const DesktopSeatFilters = () => {
                         onClick={() => setFilters({adjacentCount: 3})}
                         className={`px-3 py-1 border rounded transition-colors ${
                             filters.adjacentCount === 3
-                                ? "bg-blue-500 text-white border-blue-500"
+                                ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
                         }`}
                     >
@@ -57,7 +57,7 @@ const DesktopSeatFilters = () => {
                         onClick={() => setFilters({adjacentCount: null})}
                         className={`px-3 py-1 border rounded transition-colors ${
                             filters.adjacentCount === null
-                                ? "bg-blue-500 text-white border-blue-500"
+                                ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
                         }`}
                     >
