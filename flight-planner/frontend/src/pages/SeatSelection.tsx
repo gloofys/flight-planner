@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SeatRow from "../components/seats/SeatRow";
 import DesktopSeatFilters from "../components/seatFilters/DesktopSeatFilters";
 import MobileSeatFilters from "../components/seatFilters/MobileSeatFilters";
@@ -20,7 +19,23 @@ interface Seat {
     nearExit: boolean;
 }
 
+interface Flight {
+    id: number;
+    from: string;
+    destination: string;
+    flightDate: string;
+    flightTime: string;
+    airline: string;
+    flightName: string;
+    duration: number;
+    price: number;
+    layovers: number;
+}
+
 const SeatSelectionContent = () => {
+    const { state } = useLocation() as { state: { flight: Flight } };
+    const flightInfo = state?.flight;
+
     const [seats, setSeats] = useState<Seat[]>([]);
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const navigate = useNavigate();
@@ -73,16 +88,14 @@ const SeatSelectionContent = () => {
             </div>
             <div className="mt-6">
                 <button
-                    disabled={
-                        selectedSeats.length !== (filters.search.passengers || 1)
-                    }
-                    onClick={() =>
-                        alert(
-                            `Selected seats: ${selectedSeats
-                                .map((s) => s.seatNumber)
-                                .join(", ")}`
-                        )
-                    }
+                    disabled={selectedSeats.length !== (filters.search.passengers || 1)}
+                    onClick={() => {
+                        if (flightInfo) {
+                            navigate(`/ticket/${flightInfo.id}`, {state: {selectedSeats, flight: flightInfo}});
+                        } else {
+                            navigate("/ticket");
+                        }
+                    }}
                     className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
                 >
                     Confirm Seat
@@ -101,10 +114,10 @@ const SeatSelectionContent = () => {
 const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
-            <MobileSeatFilters />
+            <MobileSeatFilters/>
             <div className="flex">
-                <DesktopSeatFilters />
-                <SeatSelectionContent />
+                <DesktopSeatFilters/>
+                <SeatSelectionContent/>
             </div>
         </SeatFiltersProvider>
     );

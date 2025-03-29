@@ -26,9 +26,10 @@ const FlightDetails = () => {
                 method: "POST",
             });
             if (!res.ok) {
-                throw new Error("Failed to reset seat plan");
+                console.error("Failed to reset seat plan");
+                return;
             }
-            navigate(`/flights/${id}/seats`);
+            navigate(`/flights/${id}/seats`, { state: { flight } });
         } catch (error) {
             console.error("Error resetting seat plan:", error);
         }
