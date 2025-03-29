@@ -8,7 +8,7 @@ const LayoversFilter = () => {
     return (
         <div className="mb-4">
             <p className="text-sm text-gray-600 mb-2">Max Layovers: {currentValue}</p>
-            <div className="flex space-x-2">
+            <div className="flex space-x-0">
                 {options.map((option) => (
                     <button
                         key={option}

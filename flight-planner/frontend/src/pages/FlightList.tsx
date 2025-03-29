@@ -2,9 +2,9 @@ import {useEffect, useState} from "react";
 import {getFlightsMetadata, getFlights} from "../services/flightService.ts";
 import FlightSearchBar from "../components/FlightSearchBar.tsx";
 import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
-// import MobileFlightFilters from "./flightFilters/MobileFlightFilters.tsx";
 import DesktopFlightFilters from "../components/flightFilters/DesktopFlightFilters.tsx";
 import {Link} from "react-router-dom";
+import MobileFlightFilters from "../components/flightFilters/MobileFlightFilters.tsx";
 
 interface Flight {
     id: number;
@@ -43,7 +43,7 @@ const FlightList = () => {
                     ...prev,
                     priceRange: [adjustedMin, adjustedMax],
                     flightDuration: meta.maxDuration || prev.flightDuration,
-                    layovers: 2, // Reset to 2 for every new search
+                    layovers: 2,
                 }));
                 if (meta.maxDuration) setDurationMax(meta.maxDuration);
                 if (meta.maxLayovers) setLayoversMax(meta.maxLayovers);
@@ -95,6 +95,7 @@ const FlightList = () => {
             <header className="w-full bg-white shadow-md p-4 sticky top-0 z-50">
                 <FlightSearchBar/>
             </header>
+            <MobileFlightFilters />
             <div className="flex flex-1">
 
                 <aside className="hidden md:block w-64 bg-gray-50 border-r p-4">

@@ -13,7 +13,7 @@ interface DesktopFlightFiltersProps {
 const DesktopFlightFilters = ({ priceMin, priceMax, durationMax, layoversMax }: DesktopFlightFiltersProps) => {
     return (
         <aside>
-            <h3 className="text-lg font-semibold mb-2">Filters</h3>
+            <h3 className="text-lg font-semibold mb-2">Filter</h3>
             <PriceFilter min={priceMin} max={priceMax} />
             <DurationFilter max={durationMax} />
             <LayoverFilter max={layoversMax} />
