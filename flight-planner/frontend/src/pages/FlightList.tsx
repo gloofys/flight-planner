@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {getFlightsMetadata, getFlights} from "../services/flightService.ts";
-import FlightSearchBar from "../components/FlightSearchBar.tsx";
+import FlightSearchBar from "../components/searchbar/FlightSearchBar.tsx";
 import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
 import DesktopFlightFilters from "../components/flightFilters/DesktopFlightFilters.tsx";
 import {Link} from "react-router-dom";
 import MobileFlightFilters from "../components/flightFilters/MobileFlightFilters.tsx";
+import FlightIcon from '@mui/icons-material/Flight';
 
 interface Flight {
     id: number;
@@ -52,7 +53,6 @@ const FlightList = () => {
     }, [filters.search]);
 
 
-
     useEffect(() => {
         setLoading(true);
         getFlights(filters.search)
@@ -89,13 +89,15 @@ const FlightList = () => {
         setFilteredFlights(result);
     }, [filters.ui, baseFlights]);
 
+    const flightsToDisplay = filteredFlights.slice(0, 5);
+
 
     return (
         <div className="flex flex-col min-h-screen">
             <header className="w-full bg-white shadow-md p-4 sticky top-0 z-50">
                 <FlightSearchBar/>
             </header>
-            <MobileFlightFilters />
+            <MobileFlightFilters/>
             <div className="flex flex-1">
 
                 <aside className="hidden md:block w-64 bg-gray-50 border-r p-4">
@@ -106,21 +108,31 @@ const FlightList = () => {
                     {loading ? (
                         <p>Loading Flights...</p>
                     ) : filteredFlights.length > 0 ? (
-                        <ul className="mt-4">
-                            {filteredFlights.map((flight) => (
-                                <li key={flight.id}
-                                    className="border p-4 mb-3 rounded shadow-sm hover:bg-gray-50 transition">
-                                    <Link to={`/flights/${flight.id}`} className="block text-sm">
-                                        <div className="font-semibold text-lg">
-                                            ✈ {flight.from} → {flight.destination}
-                                        </div>
-                                        <div
-                                            className="text-gray-600">{flight.flightDate} at {flight.flightTime.slice(0, 5)}</div>
-                                        <div className="text-gray-700 font-medium mt-1">€{flight.price.toFixed(2)}</div>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        <>
+                            {filteredFlights.length > 10 && (
+                                <p className="mb-4 text-xl text-gray-600">
+                                    5 random flights displayed. Use the search bar for more flights.
+                                </p>
+                            )}
+                            <ul className="mt-4">
+                                {flightsToDisplay.map((flight) => (
+                                    <li key={flight.id}
+                                        className="border p-4 mb-3 rounded shadow-sm hover:bg-gray-50 transition">
+                                        <Link to={`/flights/${flight.id}`} className="block text-sm">
+                                            <div className="font-semibold text-lg">
+                                                <FlightIcon/> {flight.from} → {flight.destination}
+                                            </div>
+                                            <div className="text-gray-600">
+                                                {flight.flightDate} at {flight.flightTime.slice(0, 5)}
+                                            </div>
+                                            <div className="text-gray-700 font-medium mt-1">
+                                                €{flight.price.toFixed(2)}
+                                            </div>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
                     ) : (
                         <p>No flights found.</p>
                     )}
