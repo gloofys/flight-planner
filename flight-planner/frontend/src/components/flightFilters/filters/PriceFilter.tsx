@@ -1,4 +1,4 @@
-// components/FlightFilters/filters/PriceFilter.tsx
+
 import { Slider } from '@base-ui-components/react/slider';
 import { useFlightFilters } from "../../../context/FlightFiltersContext.tsx";
 import {useEffect} from "react";
