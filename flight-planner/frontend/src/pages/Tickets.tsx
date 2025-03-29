@@ -91,9 +91,6 @@ const Tickets = () => {
                                 <p className="text-gray-700">
                                     <strong>Duration:</strong> {flight?.duration} min
                                 </p>
-                                <p className="text-gray-700">
-                                    <strong>Layovers:</strong> {flight?.layovers}
-                                </p>
                             </div>
                             <div className="mt-2 md:mt-0 text-right">
                                 <p className="text-gray-700">

@@ -5,6 +5,8 @@ import DesktopSeatFilters from "../components/seatFilters/DesktopSeatFilters";
 import MobileSeatFilters from "../components/seatFilters/MobileSeatFilters";
 import { SeatFiltersProvider } from "../context/SeatFiltersContext";
 import { useFlightFilters } from "../context/FlightFiltersContext";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 interface Seat {
     id: number;
@@ -40,6 +42,8 @@ const SeatSelectionContent = () => {
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const navigate = useNavigate();
     const { filters } = useFlightFilters();
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMsg, setSnackbarMsg] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:8080/api/seats")
@@ -59,13 +63,17 @@ const SeatSelectionContent = () => {
         .sort((a, b) => a - b);
 
     const handleSelect = (seat: Seat) => {
-        setSelectedSeats((prev) => {
-            if (prev.find((s) => s.id === seat.id)) {
-                return prev.filter((s) => s.id !== seat.id);
+        const maxSeats = filters.search.passengers || 1;
+        if (selectedSeats.find((s) => s.id === seat.id)) {
+            setSelectedSeats((prev) => prev.filter((s) => s.id !== seat.id));
+        } else {
+            if (selectedSeats.length < maxSeats) {
+                setSelectedSeats((prev) => [...prev, seat]);
             } else {
-                return [...prev, seat];
+                setSnackbarMsg(`You can only select ${maxSeats} seat${maxSeats > 1 ? "s" : ""}.`);
+                setSnackbarOpen(true);
             }
-        });
+        }
     };
 
     return (
@@ -107,6 +115,20 @@ const SeatSelectionContent = () => {
                     Back
                 </button>
             </div>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity="warning"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                >
+                    {snackbarMsg}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };

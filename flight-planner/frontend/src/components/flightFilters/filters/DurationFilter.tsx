@@ -7,7 +7,6 @@ const DurationFilter = ({ max }: { max: number }) => {
     const value = filters.ui.flightDuration;
 
     useEffect(() => {
-        console.log("DurationFilter: context flightDuration =", value, "max =", max);
         if (value > max) {
             setUiFilters({ flightDuration: max });
         }
