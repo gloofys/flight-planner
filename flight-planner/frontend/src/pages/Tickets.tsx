@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
 
 interface Seat {
     id: number;
@@ -24,10 +25,16 @@ interface TicketState {
 }
 
 const Tickets = () => {
+    const { resetFilters } = useFlightFilters();
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state as TicketState | undefined;
     const flight = state?.flight;
+
+    const handleBookNewFlight = () => {
+        resetFilters()
+        navigate("/")
+    }
 
     if (!state || !state.selectedSeats || state.selectedSeats.length === 0) {
         return (
@@ -99,7 +106,7 @@ const Tickets = () => {
             </div>
 
             <button
-                onClick={() => navigate("/")}
+                onClick={handleBookNewFlight}
                 className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
             >
                 Book a New Flight
