@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.flightplanner.dto.FilterMetaDataDTO;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,12 @@ public class FlightController {
         options.put("to", flightRepository.findDistinctDestinations());
         return options;
     }
+    @GetMapping("/destinations")
+    public Map<String, List<String>> getDestinations(@RequestParam String from) {
+        List<String> destinations = flightRepository.findDestinationsByFrom(from);
+        return Collections.singletonMap("to", destinations);
+    }
+
     @GetMapping("/metadata")
     public ResponseEntity<FilterMetaDataDTO> getFlightMetadata(
             @RequestParam(required = false) String from,

@@ -9,7 +9,7 @@ const TimeFilter = () => {
     return (
         <div className="mb-4">
             <p className="text-sm mb-2 text-gray-600">Departure Time: {flightTime}</p>
-            <div className="flex flex-col space-x-2">
+            <div className="flex flex-col">
                 {options.map((option) => (
                     <button
                         key={option}

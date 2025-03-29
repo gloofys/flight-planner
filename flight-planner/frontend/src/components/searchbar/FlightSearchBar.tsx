@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Autocomplete, TextField, MenuItem, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useFlightFilters } from "../context/FlightFiltersContext";
+import { useFlightFilters } from "../../context/FlightFiltersContext";
 
 const FlightSearchBar = () => {
     const { setSearchFilters } = useFlightFilters();
@@ -18,9 +18,22 @@ const FlightSearchBar = () => {
             .then((res) => res.json())
             .then((data) => {
                 setAirportOptionsFrom(data.from);
-                setAirportOptionsTo(data.to);
             });
     }, []);
+
+    useEffect(() => {
+        if (from) {
+            fetch(`http://localhost:8080/api/flights/destinations?from=${encodeURIComponent(from)}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setAirportOptionsTo(data.to);
+                })
+                .catch((err) => console.error("Failed to fetch destination options", err));
+        } else {
+
+            setAirportOptionsTo([]);
+        }
+    }, [from]);
 
     const handleSearch = () => {
         if (!from || !to || !flightDate) {
@@ -50,7 +63,6 @@ const FlightSearchBar = () => {
                         freeSolo
                     />
                 </div>
-
                 <div className="flex-1 min-w-[120px]">
                     <Autocomplete
                         options={airportOptionsTo}
@@ -62,7 +74,6 @@ const FlightSearchBar = () => {
                         freeSolo
                     />
                 </div>
-
                 <div className="flex-1 min-w-[120px]">
                     <TextField
                         type="date"
@@ -81,7 +92,6 @@ const FlightSearchBar = () => {
                         }}
                     />
                 </div>
-
                 <div className="flex-1 min-w-[100px]">
                     <TextField
                         select
@@ -98,14 +108,12 @@ const FlightSearchBar = () => {
                         <MenuItem value={4}>4</MenuItem>
                     </TextField>
                 </div>
-
                 <div className="min-w-[40px]">
                     <IconButton onClick={handleSearch} color="primary" size="small">
                         <SearchIcon />
                     </IconButton>
                 </div>
             </div>
-
             {error && (
                 <p className="text-red-500 text-sm mt-1 text-center">{error}</p>
             )}
