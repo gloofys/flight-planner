@@ -1,3 +1,8 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
+# Enforce LF for gradlew and gradle-wrapper properties
+backend/gradlew text eol=lf
+backend/gradlew.bat text eol=crlf
+backend/gradle/wrapper/gradle-wrapper.properties text eol=lf
+backend/gradle/wrapper/gradle-wrapper.jar binary
