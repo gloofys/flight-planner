@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import SeatRow from "../components/seats/SeatRow";
 import DesktopSeatFilters from "../components/seatFilters/DesktopSeatFilters";
 import MobileSeatFilters from "../components/seatFilters/MobileSeatFilters";
-import { SeatFiltersProvider } from "../context/SeatFiltersContext";
-import { useFlightFilters } from "../context/FlightFiltersContext";
+import {SeatFiltersProvider} from "../context/SeatFiltersContext";
+import {useFlightFilters} from "../context/FlightFiltersContext";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import MobileSeatLegend from "../components/legends/MobileSeatLegend.tsx";
@@ -37,13 +37,13 @@ interface Flight {
 }
 
 const SeatSelectionContent = () => {
-    const { state } = useLocation() as { state: { flight: Flight } };
+    const {state} = useLocation() as { state: { flight: Flight } };
     const flightInfo = state?.flight;
 
     const [seats, setSeats] = useState<Seat[]>([]);
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const navigate = useNavigate();
-    const { filters } = useFlightFilters();
+    const {filters} = useFlightFilters();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMsg, setSnackbarMsg] = useState("");
 
@@ -80,10 +80,12 @@ const SeatSelectionContent = () => {
 
     return (
         <div className="max-w-3xl mx-auto bg-white rounded  p-0 md:p-6 mt-0 md:mt-6 mb-10">
-            <h2 className="text-2xl font-bold mb-6">Select Your Seat(s)</h2>
+            <h2 className="text-2xl font-bold mb-6">
+                Select Your Seat{(filters.search.passengers || 1) > 1 ? "s" : ""}
+            </h2>
             <p className="mb-4 text-sm text-gray-600">
-                Please select exactly {filters.search.passengers || 1} seat
-                {(filters.search.passengers || 1) > 1 ? "s" : ""}.
+                Please select {filters.search.passengers || 1} seat
+                {(filters.search.passengers || 1) > 1 ? "s" : ""} and confirm your selection below.
             </p>
             <div className="space-y-3">
                 {sortedRows.map((row) => (
@@ -96,27 +98,39 @@ const SeatSelectionContent = () => {
                     />
                 ))}
             </div>
-            <div className="mt-6">
-                <button
-                    disabled={selectedSeats.length !== (filters.search.passengers || 1)}
-                    onClick={() => {
-                        if (flightInfo) {
-                            navigate(`/ticket/${flightInfo.id}`, {state: {selectedSeats, flight: flightInfo}});
-                        } else {
-                            navigate("/ticket");
-                        }
-                    }}
-                    className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
-                >
-                    Confirm Seat
-                </button>
+            <div className="mt-6 flex gap-4">
                 <button
                     onClick={() => navigate(-1)}
-                    className="ml-4 bg-gray-200 px-4 py-2 rounded"
+                    className="flex-1 bg-gray-200 py-2 rounded text-center hover:bg-gray-300 transition"
                 >
                     Back
                 </button>
+                <div className="relative group flex-1">
+                    <button
+                        disabled={selectedSeats.length !== (filters.search.passengers || 1)}
+                        onClick={() => {
+                            if (flightInfo) {
+                                navigate(`/ticket/${flightInfo.id}`, {
+                                    state: {selectedSeats, flight: flightInfo},
+                                });
+                            }
+                        }}
+                        className={`w-full py-2 rounded text-white transition
+                            ${selectedSeats.length === (filters.search.passengers || 1)
+                            ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                            : "bg-blue-300 cursor-not-allowed"}`}
+                    >
+                        Confirm
+                    </button>
+                    {selectedSeats.length !== (filters.search.passengers || 1) && (
+                        <div
+                            className="absolute -bottom-10 right-0 text-sm text-gray-700 bg-white border px-3 py-1 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap">
+                            Select all seats to continue
+                        </div>
+                    )}
+                </div>
             </div>
+
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
@@ -139,11 +153,11 @@ const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
             <MobileSeatFilters/>
-            <MobileSeatLegend />
+            <MobileSeatLegend/>
             <div className="flex flex-1 bg-white md:bg-ebb">
                 <DesktopSeatFilters/>
                 <SeatSelectionContent/>
-                <DesktopSeatLegend />
+                <DesktopSeatLegend/>
             </div>
 
         </SeatFiltersProvider>

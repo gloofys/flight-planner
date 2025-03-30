@@ -28,7 +28,9 @@ interface FlightFiltersContextType {
 }
 
 const defaultFilters: FlightFilters = {
-    search: {},
+    search: {
+        passengers: 2,
+    },
     ui: {
         priceRange: [0, 1000],
         flightDuration: 600,
