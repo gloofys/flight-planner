@@ -1,6 +1,7 @@
 # Flight Planner App
 
-This is a full-stack flight planner application with a React + Vite frontend and a Spring Boot backend with a PostgreSQL database.
+This is a full-stack flight planner application with a React + Vite frontend
+and a Spring Boot backend with a PostgreSQL database.
 
 
 ##  Getting Started
@@ -60,6 +61,12 @@ Backend:
 #### Dev Tools:
 - Docker Compose
 - Gradle
+
+### Flight generation.
+- 200 random flights are generated. 
+- The departure dates generated will be from current date + 30 days. So keep that in mind when searching for flights.
+- There are 8 departure and destination cities and the to-from pairs are generated randomly.
+- If you want to add more departure/destination cities or want to add a longer date window you have to modify ```/backend/src/main/java/com.example.flightplanner/config/FlightDataGenerator```
 
 ### Dynamic filtering
 This app uses dynamic filtering, which means that many frontend filter components (e.g., price range, layover count, flight duration) trigger backend API calls as the user interacts with them — especially on desktop, where filters apply in real-time.

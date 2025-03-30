@@ -17,7 +17,7 @@ public class FlightDataGenerator implements ApplicationRunner {
     private final Random random = new Random();
 
     private final String[] departureCities = {"Tallinn", "Paris", "Berlin", "London", "Rome", "Madrid", "Amsterdam", "Prague"};
-    private final String[] destinations = {"New York", "Dubai", "Tokyo", "Sydney", "Moscow", "Istanbul", "Toronto", "Beijing"};
+    private final String[] destinations = {"New York", "Dubai", "Tokyo", "Sydney", "Lisbon", "Istanbul", "Toronto", "Beijing"};
     private final String[] airlines = {"Air Baltic", "Air France", "Lufthansa", "British Airways", "Finnair", "Czech Airlines"};
     private final String[] flightCodes = {"AB", "AF", "LH", "BA", "AZ", "IB", "KL", "OK"};
 
@@ -35,7 +35,7 @@ public class FlightDataGenerator implements ApplicationRunner {
     }
 
     private void seedFlights() {
-        int numberOfFlights = 100;
+        int numberOfFlights = 200;
         for (int i = 0; i < numberOfFlights; i++) {
 
             String from = departureCities[random.nextInt(departureCities.length)];
