@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+// This Service was coded with the help of AI, but i had to make many tweaks to make it work as its supposed to
 @Service
 public class RandomSeatGenerationService {
 
@@ -24,7 +24,7 @@ public class RandomSeatGenerationService {
         List<Seat> seatsToSave = new ArrayList<>();
 
         for (int row = 1; row <= totalRows; row++) {
-            if (row == 13) continue; // skip row 13
+            if (row == 13) continue;
 
             for (int col = 0; col < seatLetters.length; col++) {
                 String letter = seatLetters[col];
@@ -51,6 +51,5 @@ public class RandomSeatGenerationService {
             }
         }
         seatRepository.saveAll(seatsToSave);
-        System.out.println("✅ Seeded " + seatsToSave.size() + " seats.");
     }
 }

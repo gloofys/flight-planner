@@ -22,6 +22,7 @@ interface SeatRowProps {
     onSelect: (seat: Seat) => void;
 }
 
+//this was done with the help of AI
 const SeatRow = ({ row, seats, selectedSeatIds, onSelect }: SeatRowProps) => {
     const { filters } = useSeatFilters();
 

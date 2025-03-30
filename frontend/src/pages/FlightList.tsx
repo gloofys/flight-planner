@@ -59,7 +59,6 @@ const FlightList = () => {
         setLoading(true);
         getFlights(filters.search)
             .then((data) => {
-                console.log("Base Flights from backend:", data);
                 setBaseFlights(data);
                 setLoading(false);
                 setDisplayCount(5);

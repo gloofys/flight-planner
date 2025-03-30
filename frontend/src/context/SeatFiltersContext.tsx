@@ -1,4 +1,4 @@
-
+// this was done with help of AI
 import { createContext, useContext, useState, } from "react";
 
 export interface SeatFilters {
@@ -34,6 +34,7 @@ export const SeatFiltersProvider = ({ children }: { children: React.ReactNode })
         </SeatFiltersContext.Provider>
     );
 };
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSeatFilters = () => {
     const context = useContext(SeatFiltersContext);
     if (!context) throw new Error("useSeatFilters must be used within a SeatFiltersProvider");

@@ -21,6 +21,8 @@ public class FlightDataGenerator implements ApplicationRunner {
     private final String[] airlines = {"Air Baltic", "Air France", "Lufthansa", "British Airways", "Finnair", "Czech Airlines"};
     private final String[] flightCodes = {"AB", "AF", "LH", "BA", "AZ", "IB", "KL", "OK"};
 
+//    This FlightDataGenerator was written with help from AI
+
     public FlightDataGenerator(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
     }
@@ -48,9 +50,7 @@ public class FlightDataGenerator implements ApplicationRunner {
             int minute = (random.nextInt(4)) * 15;
             LocalTime flightTime = LocalTime.of(hour, minute);
 
-
             int duration = random.nextInt(541) + 60;
-
 
             double price = (random.nextDouble() * 950) + 50;
             price = Math.round(price);
