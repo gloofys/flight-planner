@@ -51,7 +51,7 @@ const FlightSearchBar = () => {
                     <Autocomplete
                         options={airportOptionsFrom}
                         value={from}
-                        onChange={(e, newValue) => setFrom(newValue || "")}
+                        onChange={(_, newValue) => setFrom(newValue || "")}
                         renderInput={(params) => (
                             <TextField {...params} label="From" variant="outlined" size="small" fullWidth/>
                         )}
@@ -62,7 +62,7 @@ const FlightSearchBar = () => {
                     <Autocomplete
                         options={airportOptionsTo}
                         value={to}
-                        onChange={(e, newValue) => setTo(newValue || "")}
+                        onChange={(_, newValue) => setTo(newValue || "")}
                         renderInput={(params) => (
                             <TextField {...params} label="To" variant="outlined" size="small" fullWidth/>
                         )}

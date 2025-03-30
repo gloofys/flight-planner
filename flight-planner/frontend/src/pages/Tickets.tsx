@@ -77,8 +77,8 @@ const Tickets = () => {
                                         <strong>From:</strong> {flight?.from} → <strong>To:</strong> {flight?.destination}
                                     </p>
                                     <p className="text-gray-700">
-                                        <strong>Date:</strong> {formatDate(flight?.flightDate)}{" "}
-                                        <strong>Time:</strong> {formatTime(flight?.flightTime)}
+                                        <strong>Date:</strong> {formatDate(flight?.flightDate ?? "")}{" "}
+                                        <strong>Time:</strong> {formatTime(flight?.flightTime ?? "")}
                                     </p>
                                 </div>
 
@@ -94,7 +94,7 @@ const Tickets = () => {
 
                             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:items-center">
                                 <p className="text-gray-700">
-                                    <strong>Duration:</strong> {formatDuration(flight?.duration)}
+                                    <strong>Duration:</strong> {formatDuration(flight?.duration ?? 0)}
                                 </p>
                                 <p className="text-gray-900 text-lg font-semibold mt-2 md:mt-0">
                                     €{flight?.price.toFixed(2)}

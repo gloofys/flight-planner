@@ -9,7 +9,7 @@ interface Flight {
     from: string;
     flightTime: string;
     flightDate: string;
-    duration: string;
+    duration: number;
     price: number;
     layovers: number;
     airline: string;
