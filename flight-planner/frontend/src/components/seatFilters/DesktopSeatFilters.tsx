@@ -5,7 +5,7 @@ const DesktopSeatFilters = () => {
     const {filters, setFilters} = useSeatFilters();
 
     return (
-        <div className="hidden md:block p-4 bg-ebb border-r">
+        <div className="hidden md:block p-4 bg-ebb sticky top-4 self-start">
             <h3 className="text-lg font-semibold mb-3">Filter</h3>
             <div className="mb-2">
                 <FilterCheckbox

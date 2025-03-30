@@ -7,6 +7,8 @@ import { SeatFiltersProvider } from "../context/SeatFiltersContext";
 import { useFlightFilters } from "../context/FlightFiltersContext";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import MobileSeatLegend from "../components/legends/MobileSeatLegend.tsx";
+import DesktopSeatLegend from "../components/legends/DesktopSeatLegend.tsx";
 
 interface Seat {
     id: number;
@@ -137,10 +139,13 @@ const SeatSelection = () => {
     return (
         <SeatFiltersProvider>
             <MobileSeatFilters/>
-            <div className="flex bg-white md:bg-ebb">
+            <MobileSeatLegend />
+            <div className="flex flex-1 bg-white md:bg-ebb">
                 <DesktopSeatFilters/>
                 <SeatSelectionContent/>
+                <DesktopSeatLegend />
             </div>
+
         </SeatFiltersProvider>
     );
 };

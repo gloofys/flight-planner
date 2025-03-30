@@ -23,28 +23,28 @@ const MobileFlightFilters = () => {
 
     return (
         <div className="md:hidden">
-            <div className="overflow-x-auto flex space-x-4 p-2 bg-gray-100 justify-center">
+            <div className="overflow-x-auto flex space-x-4 p-2 bg-ebb justify-center">
                 <button
                     onClick={() => openFilter("price")}
-                    className="px-3 py-1 bg-blue-200 text-white rounded whitespace-nowrap"
+                    className="px-3 py-1 bg-white text-black rounded whitespace-nowrap"
                 >
                     Price
                 </button>
                 <button
                     onClick={() => openFilter("duration")}
-                    className="px-3 py-1 bg-blue-200 text-white rounded whitespace-nowrap"
+                    className="px-3 py-1 bg-white text-black rounded whitespace-nowrap"
                 >
                     Duration
                 </button>
                 <button
                     onClick={() => openFilter("layover")}
-                    className="px-3 py-1 bg-blue-200 text-white rounded whitespace-nowrap"
+                    className="px-3 py-1 bg-white text-black rounded whitespace-nowrap"
                 >
                     Layover
                 </button>
                 <button
                     onClick={() => openFilter("time")}
-                    className="px-3 py-1 bg-blue-200 text-white rounded whitespace-nowrap"
+                    className="px-3 py-1 bg-white text-black rounded whitespace-nowrap"
                 >
                     Time
                 </button>

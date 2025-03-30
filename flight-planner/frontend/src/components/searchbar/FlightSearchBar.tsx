@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { Autocomplete, TextField, MenuItem, IconButton } from "@mui/material";
+import {useState, useEffect} from "react";
+import {Autocomplete, TextField, MenuItem, IconButton} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useFlightFilters } from "../../context/FlightFiltersContext";
+import {useFlightFilters} from "../../context/FlightFiltersContext";
 
 const FlightSearchBar = () => {
-    const { setSearchFilters } = useFlightFilters();
+    const {setSearchFilters} = useFlightFilters();
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [flightDate, setFlightDate] = useState("");
@@ -41,12 +41,7 @@ const FlightSearchBar = () => {
             return;
         }
         setError("");
-        setSearchFilters({
-            from,
-            destination: to,
-            flightDate,
-            passengers,
-        });
+        setSearchFilters({from, destination: to, flightDate, passengers,});
     };
 
     return (
@@ -58,7 +53,7 @@ const FlightSearchBar = () => {
                         value={from}
                         onChange={(e, newValue) => setFrom(newValue || "")}
                         renderInput={(params) => (
-                            <TextField {...params} label="From" variant="outlined" size="small" fullWidth />
+                            <TextField {...params} label="From" variant="outlined" size="small" fullWidth/>
                         )}
                         freeSolo
                     />
@@ -69,7 +64,7 @@ const FlightSearchBar = () => {
                         value={to}
                         onChange={(e, newValue) => setTo(newValue || "")}
                         renderInput={(params) => (
-                            <TextField {...params} label="To" variant="outlined" size="small" fullWidth />
+                            <TextField {...params} label="To" variant="outlined" size="small" fullWidth/>
                         )}
                         freeSolo
                     />
@@ -88,7 +83,7 @@ const FlightSearchBar = () => {
                             max: "31-12-2030",
                         }}
                         slotProps={{
-                            inputLabel: { shrink: true }
+                            inputLabel: {shrink: true}
                         }}
                     />
                 </div>
@@ -110,7 +105,7 @@ const FlightSearchBar = () => {
                 </div>
                 <div className="min-w-[40px]">
                     <IconButton onClick={handleSearch} color="primary" size="small">
-                        <SearchIcon />
+                        <SearchIcon/>
                     </IconButton>
                 </div>
             </div>

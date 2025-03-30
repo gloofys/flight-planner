@@ -5,7 +5,7 @@ const MobileSeatFilters = () => {
     const { filters, setFilters } = useSeatFilters();
 
     return (
-        <div className="md:hidden p-3 bg-gray-50 border-b flex space-x-4">
+        <div className="md:hidden p-3 bg-ebb  flex space-x-4 sticky top-0 self-start">
             <div className="flex flex-wrap items-center gap-4">
                 <label className="flex items-center">
                     <input

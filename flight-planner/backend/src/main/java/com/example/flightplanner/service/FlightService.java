@@ -39,7 +39,7 @@ public class FlightService {
                 .filter(f -> destination == null || (f.getDestination() != null && f.getDestination().equalsIgnoreCase(destination)))
                 .filter(f -> flightDate != null && f.getFlightDate() != null && f.getFlightDate().isAfter(flightDate))
                 .sorted(Comparator.comparing(Flight::getFlightDate))
-                .limit(1)
+                .limit(3)
                 .toList();
     }
 

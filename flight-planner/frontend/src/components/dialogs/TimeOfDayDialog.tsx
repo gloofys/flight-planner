@@ -23,7 +23,7 @@ const TimeOfDayDialog: React.FC<TimeOfDayDialogProps> = ({ onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
             <div className="bg-white w-11/12 max-w-md p-4 rounded shadow-lg">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">Time of Day Filter</h3>
