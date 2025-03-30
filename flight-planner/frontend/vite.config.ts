@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
@@ -14,14 +15,12 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
-                manualChunks(id) {
-                    if (id.includes('node_modules')) {
-                        if (id.includes('react')) return 'vendor-react'
-                        if (id.includes('@mui')) return 'vendor-mui'
-                        return 'vendor-other'
-                    }
+                manualChunks: {
+                    react: ['react', 'react-dom'],
+                    mui: ['@mui/material', '@mui/icons-material'],
+                    baseui: ['@base-ui-components/react'],
                 },
             },
         },
     },
-})
+});
