@@ -8,7 +8,7 @@ But didn't find any reasonable free choices.
 - For css I used Tailwind.
 - Also implemented docker, had not set up docker myself before, so this was a great learning opportunity.
 
-## Workflow
+### Workflow
 
 I will now describe my work and thought flow.
 
@@ -59,8 +59,7 @@ For the backlog:
 30. Finally, dockerized both frontend and backend with production-ready Dockerfiles and a root docker-compose.yaml.
 31. Had to fix several small things (CORS, API URL assumptions) to make Docker build work correctly.
 
-
-## Biggest Problems I Faced and How I Solved Them 
+### Biggest Problems I Faced and How I Solved Them 
 1. ### Dynamic Metadata Filtering
 - I wanted the filters (price, duration, layovers) to update dynamically based on the results from the flight search. For example, if the user searched for flights from Tallinn to New York, the price range should reflect only those flights—not all flights.
 - I wasn’t sure how to make the backend send metadata based only on filtered results. Also, updating the frontend filters without breaking the context state took time to plan and debug.

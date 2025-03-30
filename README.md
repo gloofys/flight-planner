@@ -73,9 +73,7 @@ This app uses dynamic filtering, which means that many frontend filter component
 
 #### In a real-world production scenario, it's important to:
 - Add loading indicators while data is being fetched.
-
 - Consider debouncing input or batch-updating filters to avoid excessive API requests.
-
 - Implement server-side caching or pagination for performance and scalability.
 
 For this demo project, the filters are designed to demonstrate dynamic interactivity and flexibility in flight search behavior.
@@ -87,5 +85,5 @@ The frontend allows users to search for flights, apply filters like destination,
 Seats are displayed in a airplane seat map, and the seat occupancy is generated randomly by the backend. 
 Users can apply seat preferences such as window, legroom, near exit, or adjacent seating for 2-3 people.
 
-### See development.md for progress history, code architecture decisions, challenges, and AI-assisted parts.
+### See development.md for progress history.
 

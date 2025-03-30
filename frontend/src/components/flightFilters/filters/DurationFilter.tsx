@@ -19,7 +19,6 @@ const DurationFilter = ({ max }: { max: number }) => {
                 value={[value]}
                 onValueChange={(v) => {
                     const newVal = v[0];
-                    console.log("Slider onValueChange new value =", newVal);
                     setUiFilters({ flightDuration: newVal });
                 }}
                 min={30}
