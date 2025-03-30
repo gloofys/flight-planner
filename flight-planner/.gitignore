@@ -40,3 +40,9 @@ node_modules/
 dist/
 .env
 *.log
+
+# Allow Gradle wrapper files (important for Docker and CI/CD)
+!backend/gradlew
+!backend/gradlew.bat
+!backend/gradle/wrapper/gradle-wrapper.properties
+!backend/gradle/wrapper/gradle-wrapper.jar
