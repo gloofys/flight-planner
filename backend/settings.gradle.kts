@@ -1,1 +1,1 @@
-rootProject.name = "flight-planner-backend"
+rootProject.name = "backend"
