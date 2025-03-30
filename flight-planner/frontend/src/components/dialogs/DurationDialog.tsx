@@ -24,7 +24,7 @@ const DurationDialog: React.FC<DurationDialogProps> = ({ onClose, max }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
             <div className="bg-white w-11/12 max-w-md p-4 rounded shadow-lg">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">Duration Filter</h3>
@@ -43,7 +43,7 @@ const DurationDialog: React.FC<DurationDialogProps> = ({ onClose, max }) => {
                     >
                         <Slider.Control className="flex items-center py-3">
                             <Slider.Track className="h-1 w-full bg-gray-200 relative">
-                                <Slider.Indicator className="absolute h-full bg-blue-500 rounded" />
+                                <Slider.Indicator className="absolute h-full bg-royal-blue rounded" />
                                 <Slider.Thumb className="size-4 bg-white border shadow-md rounded-full" />
                             </Slider.Track>
                         </Slider.Control>

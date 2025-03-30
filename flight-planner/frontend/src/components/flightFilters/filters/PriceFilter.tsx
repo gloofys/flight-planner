@@ -16,7 +16,7 @@ const PriceFilter = ({ min, max }: { min: number; max: number }) => {
 
     return (
         <div className="mb-4">
-            <p className="text-m mb-2 text-gray-600">{value[0]}€ – {value[1]}€</p>
+            <p className="text-m mb-2 font-medium text-gray-600">{value[0]}€ – {value[1]}€</p>
             <Slider.Root
                 value={value}
                 onValueChange={(v) => setUiFilters({priceRange: v as [number, number]})}

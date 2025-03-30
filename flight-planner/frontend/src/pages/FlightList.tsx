@@ -6,6 +6,7 @@ import DesktopFlightFilters from "../components/flightFilters/DesktopFlightFilte
 import {Link} from "react-router-dom";
 import MobileFlightFilters from "../components/flightFilters/MobileFlightFilters.tsx";
 import FlightIcon from '@mui/icons-material/Flight';
+import { formatDate, formatTime} from"../utils/dateTimeUtils.tsx"
 
 interface Flight {
     id: number;
@@ -29,6 +30,7 @@ const FlightList = () => {
     const [priceMax, setPriceMax] = useState(1000);
     const [durationMax, setDurationMax] = useState(600);
     const [layoversMax, setLayoversMax] = useState(2);
+    const [displayCount, setDisplayCount] = useState(5);
 
     useEffect(() => {
         getFlightsMetadata(filters.search)
@@ -60,12 +62,17 @@ const FlightList = () => {
                 console.log("Base Flights from backend:", data);
                 setBaseFlights(data);
                 setLoading(false);
+                setDisplayCount(5);
+
             })
             .catch((err) => {
                 console.error("Failed to fetch base flights", err);
                 setLoading(false);
             });
     }, [filters.search]);
+
+    const flightsToDisplay = filteredFlights.slice(0, displayCount);
+
 
     useEffect(() => {
         const {priceRange, flightDuration, layovers, flightTime} = filters.ui;
@@ -89,12 +96,11 @@ const FlightList = () => {
         setFilteredFlights(result);
     }, [filters.ui, baseFlights]);
 
-    const flightsToDisplay = filteredFlights.slice(0, 5);
 
 
     return (
         <div className="flex flex-col min-h-screen bg-ebb">
-            <header className="w-full bg-ebb shadow-md p-4 sticky top-0 z-50">
+            <header className="w-full bg-ebb shadow-md p-4 z-50">
                 <FlightSearchBar/>
             </header>
             <MobileFlightFilters/>
@@ -109,21 +115,21 @@ const FlightList = () => {
                         <p>Loading Flights...</p>
                     ) : filteredFlights.length > 0 ? (
                         <>
-                            {filteredFlights.length > 10 && (
+                            {filteredFlights.length > displayCount && (
                                 <p className="mb-4 text-xl text-gray-600">
-                                    5 random flights displayed. Use the search bar for more flights.
+                                    {displayCount} random flights displayed. Use the search bar for more flights.
                                 </p>
                             )}
                             <ul className="mt-4">
                                 {flightsToDisplay.map((flight) => (
                                     <li key={flight.id}
-                                        className="border p-4 mb-3 rounded shadow-sm bg-white hover:bg-gray-50 transition">
+                                        className="border p-4 mb-3 rounded shadow-sm bg-white hover:bg-gray-300 transition">
                                         <Link to={`/flights/${flight.id}`} className="block text-sm">
                                             <div className="font-semibold text-lg">
                                                 <FlightIcon/> {flight.from} → {flight.destination}
                                             </div>
                                             <div className="text-gray-600">
-                                                {flight.flightDate} at {flight.flightTime.slice(0, 5)}
+                                                {formatDate(flight.flightDate)} at {formatTime(flight.flightTime)}
                                             </div>
                                             <div className="text-gray-700 font-medium mt-1">
                                                 €{flight.price.toFixed(2)}
@@ -132,6 +138,16 @@ const FlightList = () => {
                                     </li>
                                 ))}
                             </ul>
+                            {filteredFlights.length > displayCount && (
+                                <div className="text-center mt-4">
+                                    <button
+                                        onClick={() => setDisplayCount(displayCount + 5)}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-100 hover:text-black"
+                                    >
+                                        Load More Flights
+                                    </button>
+                                </div>
+                            )}
                         </>
                     ) : (
                         <p>No flights found.</p>

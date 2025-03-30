@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {useFlightFilters} from "../context/FlightFiltersContext.tsx";
+import {formatDate, formatTime} from "../utils/dateTimeUtils.tsx";
+import {formatDuration} from "../utils/timeUtils.ts";
 
 interface Seat {
     id: number;
@@ -75,8 +77,8 @@ const Tickets = () => {
                                         <strong>From:</strong> {flight?.from} → <strong>To:</strong> {flight?.destination}
                                     </p>
                                     <p className="text-gray-700">
-                                        <strong>Date:</strong> {flight?.flightDate}{" "}
-                                        <strong>Time:</strong> {flight?.flightTime}
+                                        <strong>Date:</strong> {formatDate(flight?.flightDate)}{" "}
+                                        <strong>Time:</strong> {formatTime(flight?.flightTime)}
                                     </p>
                                 </div>
 
@@ -92,7 +94,7 @@ const Tickets = () => {
 
                             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:items-center">
                                 <p className="text-gray-700">
-                                    <strong>Duration:</strong> {flight?.duration} min
+                                    <strong>Duration:</strong> {formatDuration(flight?.duration)}
                                 </p>
                                 <p className="text-gray-900 text-lg font-semibold mt-2 md:mt-0">
                                     €{flight?.price.toFixed(2)}

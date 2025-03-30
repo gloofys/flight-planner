@@ -14,7 +14,7 @@ const DurationFilter = ({ max }: { max: number }) => {
 
     return (
         <div className="mb-4">
-            <p className="text-m mb-2 text-gray-600">Max Duration: {value} min</p>
+            <p className="text-m font-medium mb-2 text-gray-600">Max Duration: {value} min</p>
             <Slider.Root
                 value={[value]}
                 onValueChange={(v) => {

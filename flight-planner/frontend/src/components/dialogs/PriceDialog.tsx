@@ -46,7 +46,7 @@ const PriceDialog: React.FC<PriceDialogProps> = ({ onClose }) => {
                     >
                         <Slider.Control className="flex items-center py-3">
                             <Slider.Track className="h-1 w-full bg-gray-200 relative">
-                                <Slider.Indicator className="absolute h-full bg-red-500 rounded" />
+                                <Slider.Indicator className="absolute h-full bg-royal-blue rounded" />
                                 <Slider.Thumb className="size-4 bg-white border shadow-md rounded-full" />
                                 <Slider.Thumb className="size-4 bg-white border shadow-md rounded-full" />
                             </Slider.Track>

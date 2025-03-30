@@ -35,7 +35,7 @@ const DesktopSeatFilters = () => {
                 <div className="flex space-x-0">
                     <button
                         onClick={() => setFilters({adjacentCount: 2})}
-                        className={`px-3 py-1 border rounded transition-colors ${
+                        className={`px-3 py-1 border rounded transition-colors cursor-pointer ${
                             filters.adjacentCount === 2
                                 ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
@@ -45,7 +45,7 @@ const DesktopSeatFilters = () => {
                     </button>
                     <button
                         onClick={() => setFilters({adjacentCount: 3})}
-                        className={`px-3 py-1 border rounded transition-colors ${
+                        className={`px-3 py-1 border rounded transition-colors cursor-pointer ${
                             filters.adjacentCount === 3
                                 ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
@@ -55,7 +55,7 @@ const DesktopSeatFilters = () => {
                     </button>
                     <button
                         onClick={() => setFilters({adjacentCount: null})}
-                        className={`px-3 py-1 border rounded transition-colors ${
+                        className={`px-3 py-1 border rounded transition-colors cursor-pointer ${
                             filters.adjacentCount === null
                                 ? "bg-royal-blue text-white border-blue-500"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"

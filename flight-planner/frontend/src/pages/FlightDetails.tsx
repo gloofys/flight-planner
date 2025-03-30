@@ -1,5 +1,6 @@
 import {useParams, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {formatDate, formatTime} from "../utils/dateTimeUtils.tsx"
 
 interface Flight {
     id: number;
@@ -55,8 +56,8 @@ const FlightDetails = () => {
                     <div className="space-y-2">
                         <p><strong>From:</strong> {flight.from}</p>
                         <p><strong>To:</strong> {flight.destination}</p>
-                        <p><strong>Date:</strong> {flight.flightDate}</p>
-                        <p><strong>Time:</strong> {flight.flightTime}</p>
+                        <p><strong>Date:</strong> {formatDate(flight.flightDate)}</p>
+                        <p><strong>Time:</strong> {formatTime(flight.flightTime)}</p>
                     </div>
                     <div className="space-y-2">
                         <p><strong>Duration:</strong> {flight.duration}</p>
@@ -74,16 +75,16 @@ const FlightDetails = () => {
 
                     <div className="flex gap-4">
                         <button
-                            onClick={handleChooseSeats}
-                            className="px-6 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
-                        >
-                            Choose Seats
-                        </button>
-                        <button
                             onClick={() => navigate(-1)}
-                            className="px-6 py-2 bg-gray-200 text-gray-800 rounded shadow hover:bg-gray-300 transition"
+                            className="px-6 py-2 bg-gray-200 text-gray-800 rounded shadow hover:bg-gray-300 transition cursor-pointer"
                         >
                             Back
+                        </button>
+                        <button
+                            onClick={handleChooseSeats}
+                            className="px-6 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition cursor-pointer"
+                        >
+                            Choose Seats
                         </button>
                     </div>
                 </div>
