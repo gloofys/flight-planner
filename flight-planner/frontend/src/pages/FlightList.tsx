@@ -73,6 +73,11 @@ const FlightList = () => {
 
     const flightsToDisplay = filteredFlights.slice(0, displayCount);
 
+    const exactDateMatches = filters.search.flightDate
+        ? filteredFlights.filter(
+            (flight) => flight.flightDate === filters.search.flightDate
+        )
+        : [];
 
     useEffect(() => {
         const {priceRange, flightDuration, layovers, flightTime} = filters.ui;
@@ -106,24 +111,26 @@ const FlightList = () => {
             <MobileFlightFilters/>
             <div className="flex flex-1">
 
-                <aside className="hidden md:block w-64 bg-ebb border-r p-4">
+                <aside className="hidden md:block w-64 bg-ebb shadow-md p-4">
                     <DesktopFlightFilters priceMin={priceMin} priceMax={priceMax} durationMax={durationMax}
                                           layoversMax={layoversMax}/>
                 </aside>
-                <main className="flex-1 p-6">
+                <main className="flex-1 p-6 2xl:mx-30">
                     {loading ? (
                         <p>Loading Flights...</p>
                     ) : filteredFlights.length > 0 ? (
                         <>
-                            {filteredFlights.length > displayCount && (
-                                <p className="mb-4 text-xl text-gray-600">
-                                    {displayCount} random flights displayed. Use the search bar for more flights.
+                            {filters.search.flightDate && exactDateMatches.length === 0 && (
+                                <p className="mb-4 text-xl 2xl:text-2xl xl:text-xl text-gray-600">
+                                    No flights available on {formatDate(filters.search.flightDate)}.  Displaying  flights departing after your selected date.
                                 </p>
                             )}
                             <ul className="mt-4">
                                 {flightsToDisplay.map((flight) => (
-                                    <li key={flight.id}
-                                        className="border p-4 mb-3 rounded shadow-sm bg-white hover:bg-gray-300 transition">
+                                    <li
+                                        key={flight.id}
+                                        className="p-4 mb-3 rounded shadow-md bg-white hover:bg-gray-300 transition"
+                                    >
                                         <Link to={`/flights/${flight.id}`} className="block text-sm">
                                             <div className="font-semibold text-lg">
                                                 <FlightIcon/> {flight.from} → {flight.destination}
