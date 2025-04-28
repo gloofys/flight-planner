@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {formatDate, formatTime} from "../utils/dateTimeUtils.tsx"
 import {formatDuration} from "../utils/timeUtils.ts";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface Flight {
     id: number;
     destination: string;
@@ -24,7 +26,7 @@ const FlightDetails = () => {
 
     const handleChooseSeats = async () => {
         try {
-            const res = await fetch("http://localhost:8080/api/seats/reset", {
+            const res = await fetch(`${API_URL}/api/seats/reset`, {
                 method: "POST",
             });
             if (!res.ok) {
@@ -38,7 +40,7 @@ const FlightDetails = () => {
     };
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/flights/${id}`)
+        fetch(`${API_URL}/api/flights/${id}`)
             .then(res => res.json())
             .then(setFlight)
             .catch(err => console.error("Failed to fetch flight", err))
