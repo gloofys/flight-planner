@@ -10,6 +10,8 @@ import Alert from '@mui/material/Alert';
 import MobileSeatLegend from "../components/legends/MobileSeatLegend.tsx";
 import DesktopSeatLegend from "../components/legends/DesktopSeatLegend.tsx";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface Seat {
     id: number;
     rowIndex: number;
@@ -48,7 +50,7 @@ const SeatSelectionContent = () => {
     const [snackbarMsg, setSnackbarMsg] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/seats")
+        fetch(`${API_URL}/api/seats`)
             .then((res) => res.json())
             .then(setSeats)
             .catch((err) => console.error("Failed to fetch seats", err));
