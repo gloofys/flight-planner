@@ -3,6 +3,9 @@ import {Autocomplete, TextField, MenuItem, IconButton} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {useFlightFilters} from "../../context/FlightFiltersContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const FlightSearchBar = () => {
     const {setSearchFilters} = useFlightFilters();
     const [from, setFrom] = useState("");
@@ -14,7 +17,7 @@ const FlightSearchBar = () => {
     const [airportOptionsTo, setAirportOptionsTo] = useState<string[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/flights/options")
+        fetch(`${API_URL}/api/flights/options`)
             .then((res) => res.json())
             .then((data) => {
                 setAirportOptionsFrom(data.from);
@@ -23,7 +26,7 @@ const FlightSearchBar = () => {
 
     useEffect(() => {
         if (from) {
-            fetch(`http://localhost:8080/api/flights/destinations?from=${encodeURIComponent(from)}`)
+            fetch(`${API_URL}/api/flights/destinations?from=${encodeURIComponent(from)}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setAirportOptionsTo(data.to);
