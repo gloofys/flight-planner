@@ -2,7 +2,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getFlights(filters: Record<string, any> = {}) {
     const query = new URLSearchParams(filters).toString();
-    const response = await fetch(`${API_URL}?${query}`);
+    const response = await fetch(`${API_URL}/api/flights?${query}`);
     if (!response.ok) {
         throw new Error("Failed to fetch flights");
     }
