@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/flights";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getFlights(filters: Record<string, any> = {}) {
     const query = new URLSearchParams(filters).toString();
