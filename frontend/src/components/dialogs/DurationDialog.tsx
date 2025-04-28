@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useFlightFilters } from "../../context/FlightFiltersContext";
 import { Slider } from "@base-ui-components/react/slider";
@@ -17,6 +16,12 @@ const DurationDialog: React.FC<DurationDialogProps> = ({ onClose, max }) => {
     useEffect(() => {
         setLocalValue(filters.ui.flightDuration);
     }, [filters.ui.flightDuration]);
+
+    useEffect(() => {
+        if (localValue > max) {
+            setLocalValue(max);
+        }
+    }, [max, localValue]);
 
     const handleApply = () => {
         setUiFilters({ flightDuration: localValue });
