@@ -116,7 +116,7 @@ const FlightList = () => {
                 </aside>
                 <main className="flex-1 p-6 2xl:mx-30">
                     {loading ? (
-                        <p>Loading Flights...</p>
+                        <p>Loading Flights...(Render server start may take 1 minute, Thank You for Your patience.)</p>
                     ) : filteredFlights.length > 0 ? (
                         <>
                             {filters.search.flightDate && exactDateMatches.length === 0 && (
