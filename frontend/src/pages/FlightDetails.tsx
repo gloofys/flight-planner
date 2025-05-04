@@ -1,8 +1,8 @@
-import {useParams, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {formatDate, formatTime} from "../utils/dateTimeUtils.tsx"
-import {formatDuration} from "../utils/timeUtils.ts";
-import Spinner from "../components/spinners/Spinner.tsx";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { formatDate, formatTime } from "../utils/dateTimeUtils.tsx";
+import { formatDuration } from "../utils/timeUtils.ts";
+import Spinner from "../components/spinners/Spinner";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,22 +20,24 @@ interface Flight {
 }
 
 const FlightDetails = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [flight, setFlight] = useState<Flight | null>(null);
     const [loading, setLoading] = useState(true);
     const [seatsLoading, setSeatsLoading] = useState(false);
 
     const handleChooseSeats = async () => {
+        setSeatsLoading(true);
         try {
             const res = await fetch(`${API_URL}/api/seats/reset`, {
                 method: "POST",
             });
             if (!res.ok) {
                 console.error("Failed to reset seat plan");
+                setSeatsLoading(false);
                 return;
             }
-            navigate(`/flights/${id}/seats`, {state: {flight}});
+            navigate(`/flights/${id}/seats`, { state: { flight } });
         } catch (error) {
             console.error("Error resetting seat plan:", error);
             setSeatsLoading(false);
@@ -44,9 +46,9 @@ const FlightDetails = () => {
 
     useEffect(() => {
         fetch(`${API_URL}/api/flights/${id}`)
-            .then(res => res.json())
+            .then((res) => res.json())
             .then(setFlight)
-            .catch(err => console.error("Failed to fetch flight", err))
+            .catch((err) => console.error("Failed to fetch flight", err))
             .finally(() => setLoading(false));
     }, [id]);
 
@@ -58,8 +60,7 @@ const FlightDetails = () => {
             <div className="max-w-4xl mx-auto space-y-6">
                 <div className="bg-white p-6 rounded shadow-md">
                     <h2 className="text-2xl font-bold mb-4">Flight Information</h2>
-                    <div
-                        className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-gray-800 text-base md:text-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-gray-800 text-base md:text-lg">
                         <div className="space-y-2">
                             <p><strong>From:</strong> {flight.from}</p>
                             <p><strong>To:</strong> {flight.destination}</p>
@@ -68,7 +69,6 @@ const FlightDetails = () => {
                         </div>
                         <div className="space-y-2">
                             <p><strong>Duration:</strong> {formatDuration(flight.duration)}</p>
-
                             <p><strong>Airline:</strong> {flight.airline}</p>
                             <p><strong>Flight:</strong> {flight.flightName}</p>
                         </div>
@@ -83,21 +83,21 @@ const FlightDetails = () => {
                     <div className="mt-4 md:mt-0 flex gap-4">
                         <button
                             onClick={() => navigate(-1)}
-                            className="px-6 py-2 bg-gray-200 text-gray-800 rounded shadow hover:bg-gray-300 transition cursor-pointer"
+                            className="px-6 py-2 bg-gray-200 text-gray-800 rounded shadow hover:bg-gray-300 transition"
                         >
                             Back
                         </button>
                         <button
                             onClick={handleChooseSeats}
                             disabled={seatsLoading}
-                            className={`px-6 py-2 rounded shadow transition flex items-center 
-    ${seatsLoading
+                            className={`px-6 py-2 rounded shadow transition flex items-center \
+                ${seatsLoading
                                 ? "bg-gray-400 cursor-not-allowed text-gray-200"
                                 : "bg-blue-600 hover:bg-blue-700 text-white"}`}
                         >
                             {seatsLoading ? (
                                 <>
-                                    <Spinner className="h-5 w-5 mr-2 text-white"/>
+                                    <Spinner className="h-5 w-5 mr-2 text-white" />
                                     Loading…
                                 </>
                             ) : (
