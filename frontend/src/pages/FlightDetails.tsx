@@ -2,6 +2,7 @@ import {useParams, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {formatDate, formatTime} from "../utils/dateTimeUtils.tsx"
 import {formatDuration} from "../utils/timeUtils.ts";
+import Spinner from "../components/spinners/Spinner.tsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -23,6 +24,7 @@ const FlightDetails = () => {
     const navigate = useNavigate();
     const [flight, setFlight] = useState<Flight | null>(null);
     const [loading, setLoading] = useState(true);
+    const [seatsLoading, setSeatsLoading] = useState(false);
 
     const handleChooseSeats = async () => {
         try {
@@ -36,6 +38,7 @@ const FlightDetails = () => {
             navigate(`/flights/${id}/seats`, {state: {flight}});
         } catch (error) {
             console.error("Error resetting seat plan:", error);
+            setSeatsLoading(false);
         }
     };
 
@@ -86,9 +89,20 @@ const FlightDetails = () => {
                         </button>
                         <button
                             onClick={handleChooseSeats}
-                            className="px-6 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition cursor-pointer"
+                            disabled={seatsLoading}
+                            className={`px-6 py-2 rounded shadow transition flex items-center 
+    ${seatsLoading
+                                ? "bg-gray-400 cursor-not-allowed text-gray-200"
+                                : "bg-blue-600 hover:bg-blue-700 text-white"}`}
                         >
-                            Choose Seats
+                            {seatsLoading ? (
+                                <>
+                                    <Spinner className="h-5 w-5 mr-2 text-white"/>
+                                    Loading…
+                                </>
+                            ) : (
+                                "Choose Seats"
+                            )}
                         </button>
                     </div>
                 </div>
